@@ -4,11 +4,40 @@ import {useEffect, useState} from "react";
 import Button from "../../components/button";
 import { MdVolumeUp } from "react-icons/md";
 import { MdFileDownload } from "react-icons/md";
+import ttsFunction from "../../feature/ttsFunction.tsx";
+
 
 
 
 export default function VoiceExtraction() {
     const [text, setText] = useState("");
+
+    const handleTTs = async () => {
+        try {
+            const ttsRes = await ttsFunction({
+                text: text,
+                language: "en",
+                audioEncoding: "MP3"
+            });
+
+            if (ttsRes) {
+                // Base64 -> Blob 변환
+                const byteCharacters = atob(ttsRes.audioContent);
+                const byteNumbers = new Uint8Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                const audioBlob = new Blob([byteNumbers], { type: "audio/mp3" });
+
+                // Blob을 Object URL로 변환 후 재생
+                const audioUrl = URL.createObjectURL(audioBlob);
+                const audio = new Audio(audioUrl);
+                audio.play();
+            }
+        } catch (error) {
+            console.error("TTS 생성 오류:", error);
+        }
+    };
 
     return (
         <div>
@@ -21,18 +50,18 @@ export default function VoiceExtraction() {
                     }
                 />
                 <div className={styles.buttonList}>
-                    <div className={styles.buttonBar}>
+                    <div className={styles.buttonBar} onClick={handleTTs}>
                         <Button width={80} height={80} onPress={() => {console.log("ASdf")}} className={styles.buttonContainer}>
                             <MdVolumeUp size={40} className={styles.buttonImage}/>
                         </Button>
                         <p>미리듣기</p>
                     </div>
-                    <div className={styles.buttonBar}>
-                        <Button width={80} height={80} onPress={() => {console.log("ASdf")}} className={styles.buttonContainer}>
-                            <MdFileDownload size={40} className={styles.buttonImage}/>
-                        </Button>
-                        <p>다운로드</p>
-                    </div>
+                        <div className={styles.buttonBar}>
+                            <Button width={80} height={80} onPress={() => {console.log("ASdf")}} className={styles.buttonContainer}>
+                                <MdFileDownload size={40} className={styles.buttonImage}/>
+                            </Button>
+                            <p>다운로드</p>
+                        </div>
                 </div>
             </div>
         </div>
