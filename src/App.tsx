@@ -9,6 +9,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<VoiceExtraction/>} />
+        <Route path="/voice-extraction" element={<VoiceExtraction/>} />
         <Route path="/vocabulary" element={<Vocabulary/>} />
       </Routes>
     </BrowserRouter>
