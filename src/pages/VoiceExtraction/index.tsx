@@ -1,16 +1,17 @@
 import Header from "../../components/header";
 import styles from "./index.module.scss";
-import {useEffect, useState} from "react";
+import { useState } from "react";
 import Button from "../../components/button";
 import { MdVolumeUp } from "react-icons/md";
 import { MdFileDownload } from "react-icons/md";
 import ttsFunction from "../../feature/ttsFunction.tsx";
-import { saveAs } from "file-saver"; // FileSaver.js 라이브러리 임포트
-
-
+import Modal from "../../components/modal/index.tsx";
+import { IoMdClose } from "react-icons/io";
 
 export default function VoiceExtraction() {
     const [text, setText] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [fileName, setFileName] = useState("");
 
     const handleTTs = async () => {
         try {
@@ -40,6 +41,11 @@ export default function VoiceExtraction() {
     };
 
     const handleDownload = async () => {
+        if (!fileName) {
+            alert("파일 이름을 입력해주세요.");
+            return;
+        }
+
         try {
             const ttsRes = await ttsFunction({
                 text: text,
@@ -62,7 +68,7 @@ export default function VoiceExtraction() {
                 const audioUrl = URL.createObjectURL(audioBlob);
                 const link = document.createElement("a");
                 link.href = audioUrl;
-                link.download = "speech.mp3"; // 다운로드될 파일 이름
+                link.download = `${fileName}.mp3`; // 다운로드될 파일 이름
                 link.click(); // 자동으로 클릭하여 다운로드
                 URL.revokeObjectURL(audioUrl); // 객체 URL 메모리 해제
             }
@@ -73,29 +79,39 @@ export default function VoiceExtraction() {
 
     return (
         <div>
-            <Header/>
+            <Header />
             <div className={styles.contents}>
                 <textarea
                     placeholder="텍스트를 입력하세요..."
-                    onChange={
-                    (e) => setText(e.target.value)
-                    }
+                    onChange={(e) => setText(e.target.value)}
                 />
                 <div className={styles.buttonList}>
                     <div className={styles.buttonBar} onClick={handleTTs}>
-                        <Button width={80} height={80} onPress={() => {console.log("ASdf")}} className={styles.buttonContainer}>
-                            <MdVolumeUp size={40} className={styles.buttonImage}/>
+                        <Button width={80} height={80} onPress={() => { console.log("ASdf"); }} className={styles.buttonContainer}>
+                            <MdVolumeUp size={40} className={styles.buttonImage} />
                         </Button>
                         <p>미리듣기</p>
                     </div>
-                    <div className={styles.buttonBar} onClick={handleDownload}>
+                    <div className={styles.buttonBar} onClick={() => setIsModalOpen(true)}>
                         <Button width={80} height={80} className={styles.buttonContainer}>
-                            <MdFileDownload size={40} className={styles.buttonImage}/>
+                            <MdFileDownload size={40} className={styles.buttonImage} />
                         </Button>
                         <p>다운로드</p>
                     </div>
                 </div>
             </div>
+            <Modal width={400} height={300} isModalOpen={isModalOpen} className={styles.modalContainer}>
+                <div className={styles.modalInputContainer}>
+                    <input
+                        placeholder="파일 이름을 입력하세요"
+                        onChange={(e) => setFileName(e.target.value)}
+                    />
+                    <Button onClick={handleDownload} width={100} height={30} className={styles.downloadButton}>다운로드</Button>
+                </div>
+                <Button width={30} height={30} onPress={() => setIsModalOpen(false)}>
+                    <IoMdClose size={30} className={styles.buttonImage} />
+                </Button>
+            </Modal>
         </div>
-    )
+    );
 }
