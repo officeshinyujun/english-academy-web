@@ -26,3 +26,12 @@
   justify-content: space-between;
   align-items: start;
 }
+
+.downloadButton{
+  background: $main-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $border-radius-small;
+  color: $text-second;
+}

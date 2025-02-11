@@ -1,23 +1,22 @@
-import styles from "./index.module.scss"
+import { useRef, useState } from "react";
+import styles from "./index.module.scss";
 import PaperSection from "../paperSection";
-import {useState} from "react";
 import Button from "../button";
-import { IoMdAdd } from "react-icons/io";
-import { IoMdRemove } from "react-icons/io";
+import { IoMdAdd, IoMdRemove } from "react-icons/io";
 
 interface props {
     background: string;
+    paperRef: React.RefObject<HTMLDivElement>; // ref를 props로 받도록 수정
 }
 
-export default function Paper(props : props) {
-    const [list, setList] = useState([1,2,3,4]);
+export default function Paper({ background, paperRef }: props) {
+    const [list, setList] = useState([1, 2, 3, 4]);
 
-    const { background } = props
     return (
-        <div className={styles.container} >
-            <div className={styles.paper} style={{ background : background }}>
+        <div className={styles.container}>
+            <div className={styles.paper} ref={paperRef} style={{ background }}>
                 {list.map((item, index) => (
-                    <PaperSection key={index}></PaperSection>
+                    <PaperSection key={index} />
                 ))}
             </div>
             <div className={styles.buttonContainer}>
@@ -39,5 +38,5 @@ export default function Paper(props : props) {
                 </Button>
             </div>
         </div>
-    )
+    );
 }

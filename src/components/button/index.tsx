@@ -1,6 +1,6 @@
 
 interface ButtonProps {
-    onPress : () => void;
+    onPress ?: () => void;
     width: number;
     height: number;
     children?: React.ReactNode;
