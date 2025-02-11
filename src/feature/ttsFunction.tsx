@@ -5,8 +5,8 @@ interface Props {
     language: string;
     audioEncoding: string;
 }
-
 export default async function ttsFunction({ text, language, audioEncoding }: Props) {
+    //@ts-ignore
     const baseUrl = `https://texttospeech.googleapis.com/v1/text:synthesize?key=${import.meta.env.VITE_API_KEY}`;
 
     try {
