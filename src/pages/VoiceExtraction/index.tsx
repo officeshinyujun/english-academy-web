@@ -78,7 +78,7 @@ export default function VoiceExtraction() {
     };
 
     return (
-        <div>
+        <div className={styles.container}>
             <Header />
             <div className={styles.contents}>
                 <textarea
@@ -106,7 +106,7 @@ export default function VoiceExtraction() {
                         placeholder="파일 이름을 입력하세요"
                         onChange={(e) => setFileName(e.target.value)}
                     />
-                    <Button onClick={handleDownload} width={100} height={30} className={styles.downloadButton}>다운로드</Button>
+                    <Button onPress={handleDownload} width={100} height={30} className={styles.downloadButton}>다운로드</Button>
                 </div>
                 <Button width={30} height={30} onPress={() => setIsModalOpen(false)}>
                     <IoMdClose size={30} className={styles.buttonImage} />

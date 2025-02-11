@@ -1,9 +1,15 @@
+.container{
+  background: $main-background;
+  width: 100vw;
+  height: 100vh;
+}
+
 .contents{
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 185px;
-  height: calc(100vh - 50px);
+  height: calc(100% - 50px);
   textarea{
     width: 800px;
     height: 400px;
