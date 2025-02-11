@@ -1,0 +1,15 @@
+.container{
+  width: 100vw;
+  height: 100vh;
+  background: $main-background;
+  display: flex;
+  flex-direction: column;
+}
+.contents{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100% - 50px);
+}

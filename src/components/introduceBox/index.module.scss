@@ -1,0 +1,13 @@
+.container{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: $spacing-large;
+  gap: $spacing-large;
+  p{
+    font-size: 24px;
+    width: 50%;
+  }
+}
