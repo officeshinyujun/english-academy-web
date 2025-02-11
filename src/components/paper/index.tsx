@@ -10,7 +10,7 @@ interface props {
 }
 
 export default function Paper({ background, paperRef }: props) {
-    const [list, setList] = useState([1, 2, 3, 4]);
+    const [list, setList] = useState([1, 2, 3, 4,5]);
 
     return (
         <div className={styles.container}>
